@@ -1,13 +1,19 @@
 <?php
 
-namespace app\core\controllers;
+namespace app\controllers;
 
 use app\core\Application;
 
 class Controller
 {
-
-    public function render($view, $params = [])
+    /**
+     * Render view file with params.
+     *
+     * @param $view
+     * @param array $params
+     * @return false|string
+     */
+    public function render($view, array $params = [])
     {
         foreach ($params as $key => $value) {
             $$key = $value;

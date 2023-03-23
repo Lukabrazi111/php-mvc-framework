@@ -75,6 +75,4 @@ class Router
 
         return $callback;
     }
-
-
 }
