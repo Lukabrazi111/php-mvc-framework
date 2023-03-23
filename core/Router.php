@@ -12,10 +12,18 @@ class Router
         $this->request = $request;
     }
 
+    public function get($path, $callback)
+    {
+        return $this->routes['get'][$path] = $callback;
+    }
+
+    public function post($path, $callback)
+    {
+        return $this->routes['post'][$path] = $callback;
+    }
+
     /**
      * Generate specific route request.
-     *
-     * @return false|string
      */
     public function resolve()
     {
@@ -27,10 +35,28 @@ class Router
             return 'Not found!';
         }
 
-        return $this->renderView($callback);
+        if (is_string($callback)) {
+            return $this->renderView($callback);
+        }
+
+        return call_user_func($this->isArray($callback) ?? $callback);
     }
 
     public function renderView($view, $params = [])
+    {
+        $layoutContent = $this->layoutContent();
+        $viewContent = $this->renderOnlyView($view, $params);
+        return str_replace('{{content}}', $viewContent, $layoutContent);
+    }
+
+    public function layoutContent()
+    {
+        ob_start();
+        include_once Application::$ROOT_PATH . "/views/layouts/main.php";
+        return ob_get_clean();
+    }
+
+    public function renderOnlyView($view, $params = [])
     {
         foreach ($params as $key => $value) {
             $$key = $value;
@@ -41,14 +67,14 @@ class Router
         return ob_get_clean();
     }
 
-    public function get($path, $callback)
+    public function isArray($callback)
     {
-        return $this->routes['get'][$path] = $callback;
+        if (is_array($callback)) {
+            $callback[0] = new $callback[0];
+        }
+
+        return $callback;
     }
 
-    public function post($path, $callback)
-    {
-        return $this->routes['post'][$path] = $callback;
-    }
 
 }
