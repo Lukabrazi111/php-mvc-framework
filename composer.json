@@ -1,0 +1,15 @@
+{
+    "name": "lukabrazi/php-mvc-framework",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Lukabrazi111",
+            "email": "lukabrazi@redberry.ge"
+        }
+    ],
+    "require": {}
+}
