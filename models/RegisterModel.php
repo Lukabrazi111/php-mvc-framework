@@ -25,9 +25,8 @@ class RegisterModel extends Model
         ];
     }
 
-    public function loadData($data)
+    public function register()
     {
-        return $data;
+        return 'Creating new user';
     }
-
 }

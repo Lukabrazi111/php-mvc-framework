@@ -11,4 +11,15 @@ abstract class Model
     protected static $RULE_EMAIL = 'email';
 
     abstract public function rules();
+
+    public function loadData($data)
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                return $this->{$key} = $value;
+            }
+        }
+
+        return true;
+    }
 }
