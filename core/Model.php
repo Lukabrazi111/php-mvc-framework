@@ -12,6 +12,12 @@ abstract class Model
 
     abstract public function rules();
 
+    /**
+     * Check if property exist from extended model.
+     *
+     * @param $data
+     * @return mixed|true
+     */
     public function loadData($data)
     {
         foreach ($data as $key => $value) {
